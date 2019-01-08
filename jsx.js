@@ -1,6 +1,6 @@
 // JSX Basics
 
-/*
+/**
  * JSX is a JavaScript extension. Similar to a template language, but 
  * with the full power of JavaScript.
  * 
@@ -10,7 +10,8 @@
  */ 
 const element = <h1>Hello, world!</h1>;
 
-/* Embedding Expressions in JSX
+/**
+ * Embedding Expressions in JSX
  *
  * You can put any JavaScript expression inside the curly braces
  * in JSX.
@@ -25,16 +26,16 @@ const element = (
   </h1>
 );
 
-/*
+/**
  * Specifying Attributes with JSX
  * 
  * Attributes can be string literals or curly braces to
  * embed a JavaScript expression in an attribute.
  */
-const element = <div tabIndex="0"></div>;
+const element = <div className="my-class-name"></div>;
 const element = <img src={user.avatarUrl}></img>;
 
-/*
+/**
  * Specifying Children with JSX
  */
 const element = (
