@@ -194,6 +194,7 @@ this.state.counter = 1;
 this.setState({ counter: 1 });
 
 // State Updates May Be Asynchronous:
+// 
 // Behind the scenes, React batches multiple `setState` calls in
 // a single update to be more performant. However, this means that
 // sometimes state is not updated immediately. If you need to do something
@@ -206,7 +207,8 @@ this.setState({
 })
 
  
-// State Updates are Merged
+// State Updates are Merged:
+// 
 // When you use `setState`, React shallow merges your object
 // into the current state. That way, you only update the specific
 // `state` you want to.
@@ -231,5 +233,110 @@ class Example extends React.Component {
     this.setState({
       comment: [...this.state.comments, comment],
     });
+  }
+}
+
+/**
+ * Handling Events
+ * 
+ * Handling events with React elements is similar to handling events
+ * on DOM elements. However, events are named using camelCase, rather than
+ * lowercase. Also, with JSX, you pass a function as the event handler, rather
+ * than a string.
+ */
+class Counter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      counter: 0,
+    }
+  }
+
+  add() {
+    this.setState({
+      counter: this.state.counter + 1,
+    });
+  }
+
+  subtract() {
+    this.setState({
+      counter: this.state.counter - 1,
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <p>{this.state.counter}</p>
+        <button onClick={this.add}>
+          Add
+        </button>
+        <button onClick={this.subtract}>
+          Subtract
+        </button>
+      </div>
+    );
+  }
+}
+
+/**
+ * Lifecycle Methods
+ * 
+ * On ES6 class components, React has several built-in lifecycle methods. These 
+ * can be used to perform things at specific times, e.g. after a component's
+ * `props` or `state` has updated.
+ */
+ class LifecycleMethods extends React.Component {
+  constructor(props) {
+    // This is called right away!
+    super(props);
+
+    // If you don’t initialize state or bind methods, you don’t
+    // need to implement a constructor.
+
+    // Avoid copying props into state!
+    this.state = {
+      name: props.name, // don't do this! 
+    };
+  }
+
+  componentDidMount() {
+    // This is called when a component is mounted into the DOM tree.
+
+    // Initialization that requires DOM nodes or making requests to a remote
+    // endpoint should go here!
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // This is called immediately after either `props` or `state` changes.
+
+    // You can access the previous `props` or `state` here, and perform actions
+    // when something changes. For example:
+    if (this.props.userId !== prevProps.userId) {
+      // Fetch new data when `userId` changes.
+      this.fetchData(this.props.userId); 
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // Use this method to determine if a component's output is going to
+    // change by the current change in `state` or `props`.
+
+    // By default, React rerenders components on every `state` or `prop`
+    // change, but in some cases you may want to prevent that as a
+    // performance optimization. To do so, this function should return 
+    // `false` in those cases.
+  }
+
+  componentWillUnmount() {
+    // This is called immediately before the component is unmounted/destroyed
+    // (i.e., removed from the DOM tree).
+
+    // Here, you can perform cleanup actions, such as cancelling requests
+    // or invalidating timers.
+  }
+
+  render() {
+    // Represents what should be rendered in the UI!
   }
 }
