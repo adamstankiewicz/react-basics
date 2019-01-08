@@ -151,3 +151,85 @@ function Comment(props) {
 // By splitting a larger component into smaller pieces, we can create
 // isolated components that do not need to know about the context in which
 // they are used!
+
+/**
+ * Component State
+ * 
+ * We learned above that components can accept `props`, or data passed to
+ * a component. However, `props` are not mutable. If a component needs to
+ * update properties, we can use `state`.
+ * 
+ * `state` is similar to `props`, but it is private and fully controlled
+ * by the component itself. Whenever a component's `state` or `props` are
+ * changed, the component is updated and rerendered in the DOM.
+ * 
+ * Note: `state` is a feature only available to ES6 class components!
+ */
+
+class Counter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      counter: 0,
+    }
+  }
+
+  render() {
+    return (
+      <h1>{this.state.counter}</h1>
+    );
+  }
+}
+
+/**
+ * Using State Correctly
+ */
+
+// Do Not Modify State Directly:
+
+// wrong
+this.state.counter = 1;
+
+// right
+this.setState({ counter: 1 });
+
+// State Updates May Be Asynchronous:
+// Behind the scenes, React batches multiple `setState` calls in
+// a single update to be more performant. However, this means that
+// sometimes state is not updated immediately. If you need to do something
+// after the state has actually been set, you can use a callback.
+
+this.setState({
+  counter: 1,
+}, () => {
+  // Do something here! `counter` state has been set.
+})
+
+ 
+// State Updates are Merged
+// When you use `setState`, React shallow merges your object
+// into the current state. That way, you only update the specific
+// `state` you want to.
+class Example extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: [],
+      comments: [],
+    };
+  }
+
+  addPost(post) {
+    // Leaves this.state.comments intact, and only updates this.state.posts!
+    this.setState({
+      posts: [...this.state.posts, post],
+    });
+  }
+
+  addComment(comment) {
+    // Leaves this.state.posts intact, and only updates this.state.comments!
+    this.setState({
+      comment: [...this.state.comments, comment],
+    });
+  }
+}
